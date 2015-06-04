@@ -5,6 +5,16 @@ __pycache__/
 # C extensions
 *.so
 
+# Images
+images/portraits/*
+images/items/*
+images/skills/*
+images/summoners/*
+images/passives/*
+
+# API Secrets
+apikeyfile
+
 # Distribution / packaging
 .Python
 env/
