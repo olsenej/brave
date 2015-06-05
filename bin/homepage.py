@@ -14,6 +14,7 @@ import os.path
 import os
 import pymysql.cursors
 from random import randint
+from flask import Flask
 
 conn=pymysql.connect(host='localhost', user='ec2-user', passwd='m4ris4', db='bravery')
 homepage = open('../index.html', 'w')
@@ -29,8 +30,30 @@ with conn.cursor() as cursor:
 	sql = "SELECT * FROM champions WHERE id=%s;"
 	rando = randint(0,len(id_array))
 	cursor.execute(sql, (id_array[rando]))
-	winner = cursor.fetchone()
-	homepage.write('<img src=\"'+winner[2]+'\"><img src=\"'+winner[3]+'\"><img src=\"'+winner[4]+'\"><img src=\"'+winner[5]+'\"><img src=\"'+winner[6]+'\"><br/>')
+	rand_champ = cursor.fetchone()
+	champ = rand_champ[2]
+
+	rando = randint(0,len(id_array))
+	cursor.execute(sql, (id_array[rando]))
+	rand_champ = cursor.fetchone()
+	q = rand_champ[3]
+
+	rando = randint(0,len(id_array))
+	cursor.execute(sql, (id_array[rando]))
+	rand_champ = cursor.fetchone()
+	w = rand_champ[4]
+
+	rando = randint(0,len(id_array))
+	cursor.execute(sql, (id_array[rando]))
+	rand_champ = cursor.fetchone()
+	e = rand_champ[5]
+
+	rando = randint(0,len(id_array))
+	cursor.execute(sql, (id_array[rando]))
+	rand_champ = cursor.fetchone()
+	r = rand_champ[6]
+
+	homepage.write('<img src=\"'+champ+'\"><img src=\"'+q+'\"><img src=\"'+w+'\"><img src=\"'+e+'\"><img src=\"'+r+'\"><br/>')
 
 cursor.close()
 conn.close()

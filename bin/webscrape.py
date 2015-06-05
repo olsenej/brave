@@ -13,8 +13,9 @@ summoner_byname_url = 'https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/p
 ddrag_realm_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/realm?api_key=%s' % apikey
 champ_byid_url = 'https://na.api.pvp.net/api/lol/na/v1.2/champion/1?api_key=%s' % apikey
 champ_list_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=passive,spells&api_key=%s' % apikey
-item_list_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/item?itemListData=image&api_key=%s' % apikey
-summoner_list_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/summoner-spell?spellData=image&api_key=%s' % apikey
+item_list_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/item?itemListData=gold,image&api_key=%s' % apikey
+map_data_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/map?api_key=%s' % apikey
+summoner_list_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/summoner-spell?spellData=image,modes&api_key=%s' % apikey
 
 image_base_path = '../images/'
 champ_square_path = image_base_path+'portraits/'
@@ -32,11 +33,15 @@ rito = urllib.request.urlopen(item_list_url)
 response_items = json.loads(rito.read().decode("utf-8"))
 items = response_items['data']
 
+rito = urllib.request.urlopen(map_data_url)
+response_map = json.loads(rito.read().decode("utf-8"))
+maps = response_map['data']
+
 rito = urllib.request.urlopen(summoner_list_url)
 response_summoners = json.loads(rito.read().decode("utf-8"))
 summoners = response_summoners['data']
 
-### Get champ square
+### Get champ square (portrait)
 for i in champs:
 	champ_square = i+'.png' ### Could also be response_champs['data'][i]
 	champ_square_url = 'http://ddragon.leagueoflegends.com/cdn/5.10.1/img/champion/%s' % champ_square
