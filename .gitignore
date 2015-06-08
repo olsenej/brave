@@ -11,6 +11,7 @@ images/items/*
 images/skills/*
 images/summoners/*
 images/passives/*
+images/masteries/*
 
 # API Secrets
 apikeyfile
