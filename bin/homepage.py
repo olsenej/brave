@@ -21,39 +21,56 @@ homepage = open('../index.html', 'w')
 
 with conn.cursor() as cursor:
 	cursor.execute("SELECT * FROM champions")
-	id_array = []
+	champ_id_array = []
 	for i in range(cursor.rowcount):
 		row = cursor.fetchone()
-		id_array.append(row[0])
-		#homepage.write('<img src=\"'+row[2]+'\"><img src=\"'+row[3]+'\"><img src=\"'+row[4]+'\"><img src=\"'+row[5]+'\"><img src=\"'+row[6]+'\"><br/>')
+		champ_id_array.append(row[0])
 
 	sql = "SELECT * FROM champions WHERE id=%s;"
-	rando = randint(0,len(id_array))
-	cursor.execute(sql, (id_array[rando]))
+	rando = randint(0,len(champ_id_array))
+	cursor.execute(sql, (champ_id_array[rando]))
 	rand_champ = cursor.fetchone()
 	champ = rand_champ[2]
 
-	rando = randint(0,len(id_array))
-	cursor.execute(sql, (id_array[rando]))
-	rand_champ = cursor.fetchone()
-	q = rand_champ[3]
+	cursor.execute("SELECT * FROM items")
+	item_id_array = []
+	for i in range(cursor.rowcount):
+                row = cursor.fetchone()
+                item_id_array.append(row[0])
 
-	rando = randint(0,len(id_array))
-	cursor.execute(sql, (id_array[rando]))
-	rand_champ = cursor.fetchone()
-	w = rand_champ[4]
+	sql = "SELECT icon FROM items WHERE id=%s;"
+	rando = randint(0,len(item_id_array))
+	cursor.execute(sql, (item_id_array[rando]))
+	rand_item = cursor.fetchone()
+	item1 = rand_item
 
-	rando = randint(0,len(id_array))
-	cursor.execute(sql, (id_array[rando]))
-	rand_champ = cursor.fetchone()
-	e = rand_champ[5]
+	rando = randint(0,len(item_id_array))
+	cursor.execute(sql, (item_id_array[rando]))
+	rand_item = cursor.fetchone()
+	item2 = rand_item
 
-	rando = randint(0,len(id_array))
-	cursor.execute(sql, (id_array[rando]))
-	rand_champ = cursor.fetchone()
-	r = rand_champ[6]
+	rando = randint(0,len(item_id_array))
+	cursor.execute(sql, (item_id_array[rando]))
+	rand_item = cursor.fetchone()
+	item3 = rand_item
 
-	homepage.write('<img src=\"'+champ+'\"><img src=\"'+q+'\"><img src=\"'+w+'\"><img src=\"'+e+'\"><img src=\"'+r+'\"><br/>')
+	rando = randint(0,len(item_id_array))
+	cursor.execute(sql, (item_id_array[rando]))
+	rand_item = cursor.fetchone()
+	item4 = rand_item
+
+	rando = randint(0,len(item_id_array))
+	cursor.execute(sql, (item_id_array[rando]))
+	rand_item = cursor.fetchone()
+	item5 = rand_item
+
+	rando = randint(0,len(item_id_array))
+	cursor.execute(sql, (item_id_array[rando]))
+	rand_item = cursor.fetchone()
+	item6 = rand_item
+
+
+	homepage.write('<img src=\"'+champ+'\"><img src=\"'+item1[0]+'\"><img src=\"'+item2[0]+'\"><img src=\"'+item3[0]+'\"><img src=\"'+item4[0]+'\"><img src=\"'+item5[0]+'\"><img src=\"'+item6[0]+'\"><br/>')
 
 cursor.close()
 conn.close()

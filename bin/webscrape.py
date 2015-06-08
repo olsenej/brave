@@ -16,6 +16,7 @@ champ_list_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/champion?ch
 item_list_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/item?itemListData=gold,image&api_key=%s' % apikey
 map_data_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/map?api_key=%s' % apikey
 summoner_list_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/summoner-spell?spellData=image,modes&api_key=%s' % apikey
+mastery_list_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/mastery?masteryListData=image,ranks&api_key=%s' % apikey
 
 image_base_path = '../images/'
 champ_square_path = image_base_path+'portraits/'
@@ -23,6 +24,7 @@ skill_path = image_base_path+'skills/'
 item_path = image_base_path+'items/'
 passive_path = image_base_path+'passives/'
 summoner_path = image_base_path+'summoners/'
+mastery_path = image_base_path+'masteries/'
 
 
 rito = urllib.request.urlopen(champ_list_url)
@@ -40,6 +42,10 @@ maps = response_map['data']
 rito = urllib.request.urlopen(summoner_list_url)
 response_summoners = json.loads(rito.read().decode("utf-8"))
 summoners = response_summoners['data']
+
+rito = urllib.request.urlopen(mastery_list_url)
+response_masteries = json.loads(rito.read().decode("utf-8"))
+masteries = response_masteries['data']
 
 ### Get champ square (portrait)
 for i in champs:
@@ -76,5 +82,12 @@ for i in summoners:
 	summoner_icon_url = 'http://ddragon.leagueoflegends.com/cdn/5.10.1/img/spell/%s' % summoner_icon
 	if not os.path.exists(summoner_path+summoner_icon):
 		urllib.request.urlretrieve(summoner_icon_url, summoner_path+summoner_icon)
+
+### Get mastery icons
+for i in masteries:
+	mastery_icon = response_masteries['data'][i]['image']['full']
+	mastery_icon_url = 'http://ddragon.leagueoflegends.com/cdn/5.2.1/img/mastery/%s' % mastery_icon
+	if not os.path.exists(mastery_path+mastery_icon):
+		urllib.request.urlretrieve(mastery_icon_url, mastery_path+mastery_icon)
 
 import mysql_loader
