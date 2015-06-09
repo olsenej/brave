@@ -16,6 +16,9 @@ images/masteries/*
 # API Secrets
 apikeyfile
 
+# HTML Index
+index.html
+
 # Distribution / packaging
 .Python
 env/
