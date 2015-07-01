@@ -35,8 +35,9 @@ def index():
 	rando = randint(0,len(champ_id_array))
 	sql = "SELECT * FROM champions WHERE id=%s;"
 	cur.execute(sql, (champ_id_array[rando]))
-
-	entries = [dict(title=row[1], text=row[2]) for row in cur.fetchall()]
+	rando = randint(3,5)
+	
+	entries = [dict(name=row[1], portrait=row[2], max_skill=row[rando],  passive=row[7]) for row in cur.fetchall()]
 
 	return render_template('index.html', entries=entries)
 
