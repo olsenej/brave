@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block body %}
+  <ul class=entries>
+  {% for entry in entries %}
+    <li><h2>{{ entry.title }}</h2><img src="{{ entry.text|safe }}">
+    <!-- <li><h2><img src="{{ url_for('static', filename = entry.text) }}"></li> -->
+    <br/><a href="{{ url_for('index') }}"><button>420 Roll it</button></a>
+  {% endfor %}
+  </ul>
+{% endblock %}
