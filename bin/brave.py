@@ -5,7 +5,7 @@ from flask import Flask, request, session, g, redirect, url_for, abort, render_t
 import pymysql
 
 # create our little application :)
-app = Flask(__name__, static_folder = "brave")
+app = Flask(__name__, static_folder = "")
 app.config.from_object(__name__)
 app.debug=True
 
@@ -24,7 +24,7 @@ def teardown_request(exception):
 		db.close()
 
 @app.route('/')
-def show_entries():
+def index():
 	cur = g.db.cursor()
 	cur.execute("SELECT * FROM champions")
 	champ_id_array = []
@@ -37,9 +37,13 @@ def show_entries():
 	cur.execute(sql, (champ_id_array[rando]))
 
 	entries = [dict(title=row[1], text=row[2]) for row in cur.fetchall()]
-	return render_template('show_entries.html', entries=entries,rando=rando)
+
+	return render_template('index.html', entries=entries)
+
+
 @app.route('/images')
 def render_image(image_path):
+	image_path='/images/'
 	return send_from_directory('',image_path)  
 
 
