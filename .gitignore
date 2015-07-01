@@ -17,7 +17,7 @@ images/masteries/*
 apikeyfile
 
 # HTML Index
-index.html
+#index.html
 
 # Distribution / packaging
 .Python
