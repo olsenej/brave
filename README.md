@@ -1,4 +1,4 @@
 # brave
 Ultimate Bravery
 
-See the site in action: brave.olsenej.com
+See the site in action: http://brave.olsenej.com
