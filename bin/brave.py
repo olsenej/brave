@@ -69,22 +69,27 @@ def roll_items():
 				cur.execute(sql, (item_id_array[rando]))
 				jungle_item = True
 				### First jungle item
+				final_build.append([row[7] for row in cur.fetchall()])
+				print("Add item"+ str(jungle_item))
 				print("First jungle"+ str(jungle_item))
 		else:
 			sql = "SELECT * FROM items WHERE id=%s;"
 			cur.execute(sql, (item_id_array[rando]))
 			### Not a jungle item
+			final_build.append([row[7] for row in cur.fetchall()])
+			print("Add item"+ str(jungle_item))
 			print("Not a jungle"+ str(jungle_item))
 
 		### Add item
-		print("Add item"+ str(jungle_item))
-		final_build.append([row[7] for row in cur.fetchall()])
+		#print("Add item"+ str(jungle_item))
+		#final_build.append([row[7] for row in cur.fetchall()])
 
 	return final_build
 
 def roll_summoners():
 	cur = g.db.cursor()
 	summoners = []
+	used_summoners = []
 	cur.execute("SELECT * FROM summoners WHERE twisted_treeline=1;")
 	summoner_id_array = []
 	for i in range(cur.rowcount):
@@ -94,7 +99,17 @@ def roll_summoners():
 		rando = randint(0,len(summoner_id_array)-1)
 		sql = "SELECT * FROM summoners WHERE id=%s"
 		cur.execute(sql, (summoner_id_array[rando]))
+		if rando in used_summoners:
+			while True:
+				if rando in used_summoners:
+					rando = randint(0,len(summoner_id_array)-1)
+					cur.execute(sql, (summoner_id_array[rando]))
+				else:
+					summoners.append([row[6] for row in cur.fetchall()])
+					used_summoners.append(rando)
+					break
 		summoners.append([row[6] for row in cur.fetchall()])
+		used_summoners.append(rando)
 	return summoners
 
 @app.route('/')
