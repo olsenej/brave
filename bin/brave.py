@@ -24,12 +24,13 @@ def teardown_request(exception):
 	if db is not None:
 		db.close()
 
-def roll_items():
+def roll_items(summoners = []):
 	### Generate item id array omitting basic items and Viktor's Hex Core
 	cur = g.db.cursor()
 	item_id_array = []
 	boot_id_array = []
 	final_build = []
+	smite  = 'images/summoners/SummonerSmite.png'
 	jungle_param = '"Enchantment%"'
 	jungle_item = False
 	jamble = re.compile("^Enchantment.*$")
@@ -49,41 +50,33 @@ def roll_items():
 	final_build.append([row[7] for row in cur.fetchall()])
 	
 	### Add the rest of the items to build
-	#for i in range(1,6):						### Run loop until items are fuill
 	while len(final_build) < 6:
-		print("Loop start"+ str(jungle_item))
 		rando = randint(0,len(item_id_array)-1)
 		sql = "SELECT * FROM items WHERE id=%s;"
 		cur.execute(sql, (item_id_array[rando]))
 		check = cur.fetchone()
 		### Check if rolled a jungle item
 		if jamble.match(check[1]): ### Aparently too stupid to use any() but regex is ok
+			#print(str(summoners[0][0])+str(summoners[1])+smite)
 			### Found a jungle item
-			if jungle_item == True:
-				sql = "SELECT * from items WHERE id=%s AND name NOT LIKE %s;"
-				rando = randint(0,len(item_id_array)-1)
-				cur.execute(sql, (item_id_array[rando], jungle_param))
-				### Already have a jungle item
-				print("Already have" + str(jungle_item))
-			elif jungle_item == False:
-				sql = "SELECT * FROM items WHERE id=%s;"
-				cur.execute(sql, (item_id_array[rando]))
-				jungle_item = True
-				### First jungle item
-				final_build.append([row[7] for row in cur.fetchall()])
-				print("Add item"+ str(jungle_item))
-				print("First jungle"+ str(jungle_item))
+			if smite in summoners[0][0] or smite in summoners[1][0]:
+				print('yes smite')
+				if jungle_item == True:
+					sql = "SELECT * from items WHERE id=%s AND name NOT LIKE %s;"
+					rando = randint(0,len(item_id_array)-1)
+					cur.execute(sql, (item_id_array[rando], jungle_param))
+					### Already have a jungle item
+				elif jungle_item == False:
+					sql = "SELECT * FROM items WHERE id=%s;"
+					cur.execute(sql, (item_id_array[rando]))
+					jungle_item = True
+					### First jungle item
+					final_build.append([row[7] for row in cur.fetchall()])
 		else:
 			sql = "SELECT * FROM items WHERE id=%s;"
 			cur.execute(sql, (item_id_array[rando]))
 			### Not a jungle item
 			final_build.append([row[7] for row in cur.fetchall()])
-			print("Add item"+ str(jungle_item))
-			print("Not a jungle"+ str(jungle_item))
-
-		### Add item
-		#print("Add item"+ str(jungle_item))
-		#final_build.append([row[7] for row in cur.fetchall()])
 
 	return final_build
 
@@ -134,7 +127,7 @@ def index():
 	summoners = roll_summoners()
 
 	### Roll Items
-	final_build = roll_items()
+	final_build = roll_items(summoners)
 
 	### Roll Masteries
 	rando = randint(0,30)
