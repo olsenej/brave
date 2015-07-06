@@ -49,7 +49,8 @@ def roll_items():
 	final_build.append([row[7] for row in cur.fetchall()])
 	
 	### Add the rest of the items to build
-	for i in range(1,6):						### Run loop until items are fuill
+	#for i in range(1,6):						### Run loop until items are fuill
+	while len(final_build) < 6:
 		print("Loop start"+ str(jungle_item))
 		rando = randint(0,len(item_id_array)-1)
 		sql = "SELECT * FROM items WHERE id=%s;"
