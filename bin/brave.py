@@ -89,7 +89,8 @@ def roll_summoners():
 	for i in range(cur.rowcount):
 		row = cur.fetchone()
 		summoner_id_array.append(row[0])
-	for i in range(0,2):
+	#for i in range(0,2):
+	while len(summoners) < 2:
 		rando = randint(0,len(summoner_id_array)-1)
 		sql = "SELECT * FROM summoners WHERE id=%s"
 		cur.execute(sql, (summoner_id_array[rando]))
