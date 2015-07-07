@@ -1,12 +1,24 @@
-<!doctype html>
-<title>Salt Mines</title>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-<div class=page>
-  <h1 class=salt>Welcome to the Salt Mines how Brave are you?</h1>
-  <div class=metanav>
-  {% for message in get_flashed_messages() %}
-    #<div class=flash>{{ message }}</div>
-  {% endfor %}
-  {% block body %}{% endblock %}
-</div>
+ {#
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "bootstrap/fixes.html" as fixes %}
+{% import "bootstrap/utils.html" as util %}
+#}
 
+<!doctype html>
+<html>
+  <head>
+  <title>Salt Mines</title>
+  {% block styles %}
+ {# {{super()}} #}
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='cover.css') }}"> 
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bravery.css') }}">
+  {% endblock %}
+  </head>
+  <body>
+  <div class="site-wrapper">
+    {% block content %}{% endblock %}
+  </div>
+  </body>
+</html>

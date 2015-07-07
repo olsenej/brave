@@ -2,11 +2,13 @@
 from random import randint
 from contextlib import closing
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
+from flask_bootstrap import Bootstrap
 import pymysql
 import re
 
 # create our little application :)
-app = Flask(__name__, static_folder = "")
+app = Flask(__name__)
+Bootstrap(app)
 app.config.from_object(__name__)
 app.debug=True
 
@@ -60,7 +62,6 @@ def roll_items(summoners = []):
 			#print(str(summoners[0][0])+str(summoners[1])+smite)
 			### Found a jungle item
 			if smite in summoners[0][0] or smite in summoners[1][0]:
-				print('yes smite')
 				if jungle_item == True:
 					sql = "SELECT * from items WHERE id=%s AND name NOT LIKE %s;"
 					rando = randint(0,len(item_id_array)-1)
@@ -105,6 +106,8 @@ def roll_summoners():
 					break
 		summoners.append([row[6] for row in cur.fetchall()])
 		used_summoners.append(rando)
+	if len(summoners) > 2:
+		summoners.pop()
 	return summoners
 
 @app.route('/')

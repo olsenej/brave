@@ -1,29 +1,52 @@
 {% extends "layout.html" %}
-{% block body %}
-<a href="{{ url_for('index') }}"><button>Do the thing</button></a>
-  <ul class="entries">
+{% block content %}
+<div class="jumbotron">
+  <h1 class=salt>Welcome to the Salt Mines how Brave are you?</h1>
+  <div class="btn-group btn-group-lg" role="group">
+    <a href="{{ url_for('index') }}"><button type="button" class="btn-lg btn-warning">Do the thing</button></a>
+  </div>
+</div>
 
+<ul class="entries">
+<div class="container-fluid">
+    <div id="champ">
   {% for entry in entries %}
-    <div id="champ"><h2>Pick this: {{ entry.name }}</h2><img src="{{ entry.portrait|safe }}"></div>
-    <div id="skill"><h2>Max this:</h2><img src="{{ entry.max_skill }}"></div>
-    <br/>
+    <h2>Pick this: {{ entry.name }}</h2><img src="{{ entry.portrait|safe }}">
   {% endfor %}
+    </div>
 
-    <div id="items"><h2>Build this:</h2>
+    <div id="items" class="row">
+{#  <h2>Build this:</h2>#}
   {% for item in final_build %}
-    <img src="{{ item[0] -}}"></div>
+    <div class="col-md-1"><img src="{{ item[0] -}}"></div>
   {% endfor %}
+    </div>
+<div class="row">
+    <div id="skill">
+{#      <h2>Max this:</h2>#}
+      <div class="col-md-1"><img src="{{ entries[0].max_skill }}"></div>
+    </div>
 
-    <div id="summoners"><h2>Take this:</h2>
+    <div id="summoners">
+{#    <h2>Take this:</h2>#}
   {% for spell in summoners %}
-    <img src="{{ spell[0] -}}"></div>
+    <div class="col-md-1"><img src="{{ spell[0] -}}"></div>
   {% endfor %}
+    </div>
 
-    <div id="masteries"><h2>Spec this:</h2>
+    <div id="masteries">
+{#    <h2>Spec this:</h2> #}
   {% for spec in masteries %}
-    <h3>{{ spec.offense }} | {{ spec.defense }} | {{ spec.utility }}</h3>
+    <div class="col-md-1 offense"><h2>{{ spec.offense }}</h2><img src="images/masteries/4162.png"></div>
+    <div class="col-md-1 defense"><h2>{{ spec.defense }}</h2><img src="images/masteries/4262.png"></div>
+    <div class="col-md-1 utility"><h2>{{ spec.utility }}</h2><img src="images/masteries/4362.png"></div>
   {% endfor %}
-    <img src="images/masteries/4162.png"> <img src="images/masteries/4262.png"> <img src="images/masteries/4362.png"></div>
-  </ul>
-    <a href="{{ url_for('index') }}"><button>Do the thing</button></a>
+</div>
+</div>
+</ul>
+{#    <div class="btn-group btn-group-lg" role="group">
+    <a href="{{ url_for('index') }}"><button type="button" class="btn-lg btn-warning">Do the thing</button></a>
+    </div>
+#}
+
 {% endblock %}

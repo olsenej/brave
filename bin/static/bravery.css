@@ -1,0 +1,13 @@
+html		{ background: #00242b; }
+body            { background: #00242b; }
+/*h1, h2          { font-family: 'Georgia', serif; } */
+h2              { color: #9eb0bd; }
+
+
+.salt		{ font-family: 'Georgia', serif; color: #b89055; }
+ 
+.entries        { list-style: none; margin: 0; padding: 0; }
+.entries li     { margin: 0.8em 1.2em; }
+.entries li h2  { margin-left: -1em; }
+
+.col-md-1.offense { background-image: url("images/masteries/4162.png"); background: #000; }
