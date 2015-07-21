@@ -9,14 +9,14 @@ k = open('apikeyfile', 'r')
 apikey = k.read()
 k.close()
 
-summoner_byname_url = 'https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/prisencolinensi?api_key=%s' % apikey
-ddrag_realm_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/realm?api_key=%s' % apikey
-champ_byid_url = 'https://na.api.pvp.net/api/lol/na/v1.2/champion/1?api_key=%s' % apikey
-champ_list_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=passive,spells&api_key=%s' % apikey
-item_list_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/item?itemListData=gold,image&api_key=%s' % apikey
-map_data_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/map?api_key=%s' % apikey
-summoner_list_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/summoner-spell?spellData=image,modes&api_key=%s' % apikey
-mastery_list_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2/mastery?masteryListData=image,ranks&api_key=%s' % apikey
+base_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2'
+
+ddrag_realm_url = '{0}/realm?api_key={1}'.format(base_url, apikey)
+champ_list_url = '{0}/champion?champData=passive,spells&api_key={1}'.format(base_url, apikey)
+item_list_url = '{0}/item?itemListData=gold,image&api_key={1}'.format(base_url, apikey)
+map_data_url = '{0}/map?api_key={1}'.format(base_url, apikey)
+summoner_list_url = '{0}/summoner-spell?spellData=image,modes&api_key={1}'.format(base_url, apikey)
+mastery_list_url = '{0}/mastery?masteryListData=image,ranks&api_key={1}'.format(base_url, apikey)
 
 image_base_path = '../images/'
 champ_square_path = image_base_path+'portraits/'
@@ -26,6 +26,10 @@ passive_path = image_base_path+'passives/'
 summoner_path = image_base_path+'summoners/'
 mastery_path = image_base_path+'masteries/'
 
+rito = urllib.request.urlopen(ddrag_realm_url)
+response_ddrag = json.loads(rito.read().decode("utf-8"))
+ddrag_version = response_ddrag['dd']
+ddrag_cdn = response_ddrag['cdn']
 
 rito = urllib.request.urlopen(champ_list_url)
 response_champs = json.loads(rito.read().decode("utf-8"))
@@ -50,7 +54,7 @@ masteries = response_masteries['data']
 ### Get champ square (portrait)
 for i in champs:
 	champ_square = i+'.png' ### Could also be response_champs['data'][i]
-	champ_square_url = 'http://ddragon.leagueoflegends.com/cdn/5.10.1/img/champion/%s' % champ_square
+	champ_square_url = '{0}/{1}/img/champion/{2}'.format(ddrag_cdn, ddrag_version, champ_square)
 	if not os.path.exists(champ_square_path+champ_square):
 		urllib.request.urlretrieve(champ_square_url, champ_square_path+champ_square)
 
@@ -58,35 +62,35 @@ for i in champs:
 for i in champs:
 	for counter in range(4):
 		skill_icon = response_champs['data'][i]['spells'][counter]['image']['full']
-		skill_icon_url = 'http://ddragon.leagueoflegends.com/cdn/5.10.1/img/spell/%s' % skill_icon
+		skill_icon_url = '{0}/{1}/img/champion/{2}'.format(ddrag_cdn, ddrag_version, skill_icon) 
 		if not os.path.exists(skill_path+skill_icon):
 			urllib.request.urlretrieve(skill_icon_url, skill_path+skill_icon)
 
 ### Get item icons
 for i in items:
 	item_icon = response_items['data'][i]['image']['full']
-	item_icon_url = 'http://ddragon.leagueoflegends.com/cdn/5.10.1/img/item/%s' % item_icon
+	item_icon_url = '{0}/{1}/img/champion/{2}'.format(ddrag_cdn, ddrag_version, item_icon)
 	if not os.path.exists(item_path+item_icon):
 		urllib.request.urlretrieve(item_icon_url, item_path+item_icon)
 
 ### Get passive icons
 for i in champs:
 	passive_icon = response_champs['data'][i]['passive']['image']['full']
-	passive_icon_url = 'http://ddragon.leagueoflegends.com/cdn/5.10.1/img/passive/%s' % passive_icon 
+	passive_icon_url = '{0}/{1}/img/champion/{2}'.format(ddrag_cdn, ddrag_version, passive_icon)
 	if not os.path.exists(passive_path+passive_icon):
 		urllib.request.urlretrieve(passive_icon_url, passive_path+passive_icon)
 
 ### Get summoner spell icons
 for i in summoners:
 	summoner_icon = response_summoners['data'][i]['image']['full']
-	summoner_icon_url = 'http://ddragon.leagueoflegends.com/cdn/5.10.1/img/spell/%s' % summoner_icon
+	summoner_icon_url = '{0}/{1}/img/champion/{2}'.format(ddrag_cdn, ddrag_version, summoner_icon)
 	if not os.path.exists(summoner_path+summoner_icon):
 		urllib.request.urlretrieve(summoner_icon_url, summoner_path+summoner_icon)
 
 ### Get mastery icons
 for i in masteries:
 	mastery_icon = response_masteries['data'][i]['image']['full']
-	mastery_icon_url = 'http://ddragon.leagueoflegends.com/cdn/5.2.1/img/mastery/%s' % mastery_icon
+	mastery_icon_url = '{0}/{1}/img/champion/{2}'.format(ddrag_cdn, ddrag_version, mastery_icon)
 	if not os.path.exists(mastery_path+mastery_icon):
 		urllib.request.urlretrieve(mastery_icon_url, mastery_path+mastery_icon)
 

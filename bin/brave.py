@@ -78,7 +78,6 @@ def roll_items(summoners = []):
 			cur.execute(sql, (item_id_array[rando]))
 			### Not a jungle item
 			final_build.append([row[7] for row in cur.fetchall()])
-
 	return final_build
 
 def roll_summoners():

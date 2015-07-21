@@ -8,27 +8,32 @@
 </div>
 
 {# <ul class="entries"> #}
-    <div id="champ" class="row">
-      {% for entry in entries %}
-      <h2><span class="label label-default">Pick this: {{ entry.name }}</span></h2><div class="col-md-12"><img src="{{ entry.portrait|safe }}"></div>
-      {% endfor %}
-    </div>
-
   <div class="container">
     <div class="row">
+    <div id="champ">
+      {% for entry in entries %}
+      <h2><span class="label label-default col-md-3">Pick this: {{ entry.name }}</span></h2>
+      <div class="col-md-1"><img src="{{ entry.portrait|safe }}"></div>
+      {% endfor %}
+    </div>
+    </div>
+
+    <div class="row">
     <div id="items" >
-      <h2><span class="label label-primary">Build this:</span></h2>
+      <h2><span class="label label-primary col-md-2">Build this:</span></h2>
       {% for item in final_build %}
         <div class="col-md-1"><img src="{{ item[0] -}}"></div>
       {% endfor %}
     </div>
     </div>
+
   <div class="row">
     <div id="skill">
       <h2><span class="label label-success col-md-2">Max this:</span></h2>
       <div class="col-md-1"><img src="{{ entries[0].max_skill }}"></div>
     </div>
   </div>
+
   <div class="row">
     <div id="summoners">
       <h2><span class="label label-info col-md-2">Take this:</span></h2>
@@ -37,6 +42,7 @@
       {% endfor %}
     </div>
   </div>
+
   <div class="row">
     <div id="masteries">
       <h2><span class="label label-danger col-md-2">Spec this:</span></h2> 
@@ -53,4 +59,10 @@
     </div>
 #}
 
+{# COPY PASTE BLOCK #}
+<div id="copyblock">
+<p>{{ entries[2] }}</P
+</div>
+
 {% endblock %}
+
