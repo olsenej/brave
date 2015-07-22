@@ -6,6 +6,7 @@ __pycache__/
 *.so
 
 # Images
+images/
 images/portraits/*
 images/items/*
 images/skills/*

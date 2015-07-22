@@ -62,35 +62,35 @@ for i in champs:
 for i in champs:
 	for counter in range(4):
 		skill_icon = response_champs['data'][i]['spells'][counter]['image']['full']
-		skill_icon_url = '{0}/{1}/img/champion/{2}'.format(ddrag_cdn, ddrag_version, skill_icon) 
+		skill_icon_url = '{0}/{1}/img/spell/{2}'.format(ddrag_cdn, ddrag_version, skill_icon) 
 		if not os.path.exists(skill_path+skill_icon):
 			urllib.request.urlretrieve(skill_icon_url, skill_path+skill_icon)
 
 ### Get item icons
 for i in items:
 	item_icon = response_items['data'][i]['image']['full']
-	item_icon_url = '{0}/{1}/img/champion/{2}'.format(ddrag_cdn, ddrag_version, item_icon)
+	item_icon_url = '{0}/{1}/img/item/{2}'.format(ddrag_cdn, ddrag_version, item_icon)
 	if not os.path.exists(item_path+item_icon):
 		urllib.request.urlretrieve(item_icon_url, item_path+item_icon)
 
 ### Get passive icons
 for i in champs:
 	passive_icon = response_champs['data'][i]['passive']['image']['full']
-	passive_icon_url = '{0}/{1}/img/champion/{2}'.format(ddrag_cdn, ddrag_version, passive_icon)
+	passive_icon_url = '{0}/{1}/img/passive/{2}'.format(ddrag_cdn, ddrag_version, passive_icon)
 	if not os.path.exists(passive_path+passive_icon):
 		urllib.request.urlretrieve(passive_icon_url, passive_path+passive_icon)
 
 ### Get summoner spell icons
 for i in summoners:
 	summoner_icon = response_summoners['data'][i]['image']['full']
-	summoner_icon_url = '{0}/{1}/img/champion/{2}'.format(ddrag_cdn, ddrag_version, summoner_icon)
+	summoner_icon_url = '{0}/{1}/img/spell/{2}'.format(ddrag_cdn, ddrag_version, summoner_icon)
 	if not os.path.exists(summoner_path+summoner_icon):
 		urllib.request.urlretrieve(summoner_icon_url, summoner_path+summoner_icon)
 
 ### Get mastery icons
 for i in masteries:
 	mastery_icon = response_masteries['data'][i]['image']['full']
-	mastery_icon_url = '{0}/{1}/img/champion/{2}'.format(ddrag_cdn, ddrag_version, mastery_icon)
+	mastery_icon_url = '{0}/{1}/img/mastery/{2}'.format(ddrag_cdn, ddrag_version, mastery_icon)
 	if not os.path.exists(mastery_path+mastery_icon):
 		urllib.request.urlretrieve(mastery_icon_url, mastery_path+mastery_icon)
 
