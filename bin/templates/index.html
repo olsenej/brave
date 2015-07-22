@@ -7,11 +7,11 @@
   </div>
 </div>
 
-{# <ul class="entries"> #}
+{# <ul class="champ"> #}
   <div class="container">
     <div class="row">
     <div id="champ">
-      {% for entry in entries %}
+      {% for entry in champ %}
       <h2><span class="label label-default col-md-3">Pick this: {{ entry.name }}</span></h2>
       <div class="col-md-1"><img src="{{ entry.portrait|safe }}"></div>
       {% endfor %}
@@ -22,23 +22,24 @@
     <div id="items" >
       <h2><span class="label label-primary col-md-2">Build this:</span></h2>
       {% for item in final_build %}
-        <div class="col-md-1"><img src="{{ item[0] -}}"></div>
+        <div class="col-md-1"><img src="{{ item[0].icon -}}"></div>
       {% endfor %}
     </div>
     </div>
 
   <div class="row">
     <div id="skill">
-      <h2><span class="label label-success col-md-2">Max this:</span></h2>
-      <div class="col-md-1"><img src="{{ entries[0].max_skill }}"></div>
+      <h2><span class="label label-info col-md-2">Max this:</span></h2>
+      <div class="col-md-1"><img src="{{ champ[0].skill_icon }}"></div>
+       <div class="col-md-1"><h2>{{ champ[0].skill_name }}</h2></div>
     </div>
   </div>
 
   <div class="row">
     <div id="summoners">
-      <h2><span class="label label-info col-md-2">Take this:</span></h2>
+      <h2><span class="label label-success col-md-2">Take this:</span></h2>
       {% for spell in summoners %}
-        <div class="col-md-1"><img src="{{ spell[0] -}}"></div>
+        <div class="col-md-1"><img src="{{ spell[0].icon -}}"></div>
       {% endfor %}
     </div>
   </div>
@@ -53,15 +54,26 @@
       {% endfor %}
     </div>
   </div>
-{#</ul>#}
-{#    <div class="btn-group btn-group-lg" role="group">
-    <a href="{{ url_for('index') }}"><button type="button" class="btn-lg btn-warning">Do the thing</button></a>
-    </div>
-#}
 
 {# COPY PASTE BLOCK #}
-<div id="copyblock">
-<p>{{ entries[2] }}</P
+<div class="row">
+<div id="copyblock"><p>
+<h2><span class="label label-default col-md-2">Copy this:</span></h2>
+<h4 class="col-md-8">
+{% for entry in champ -%}
+ {{ entry.name }} maxing {{ entry.skill_name }} building
+{% endfor -%}
+{% for item in final_build -%}
+ {{ item[0].name }}, 
+{% endfor -%} taking
+{% for spell in summoners -%}
+ {{ spell[0].name }}
+{% endfor -%} specing
+{% for spec in masteries -%}
+ {{ spec.offense }} offense, {{ spec.defense }} defense, {{ spec.utility }} utility
+{% endfor %}
+</h4>
+</div>
 </div>
 
 {% endblock %}

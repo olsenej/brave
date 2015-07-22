@@ -49,7 +49,7 @@ def roll_items(summoners = []):
 	rando = randint(0,len(boot_id_array)-1)
 	sql = "SELECT * FROM items WHERE twisted_treeline=1 AND id=%s"
 	cur.execute(sql, (boot_id_array[rando]))
-	final_build.append([row[7] for row in cur.fetchall()])
+	final_build.append([dict(name=row[1], icon=row[7]) for row in cur.fetchall()])
 	
 	### Add the rest of the items to build
 	while len(final_build) < 6:
@@ -72,12 +72,12 @@ def roll_items(summoners = []):
 					cur.execute(sql, (item_id_array[rando]))
 					jungle_item = True
 					### First jungle item
-					final_build.append([row[7] for row in cur.fetchall()])
+					final_build.append([dict(name=row[1], icon=row[7]) for row in cur.fetchall()])
 		else:
 			sql = "SELECT * FROM items WHERE id=%s;"
 			cur.execute(sql, (item_id_array[rando]))
 			### Not a jungle item
-			final_build.append([row[7] for row in cur.fetchall()])
+			final_build.append([dict(name=row[1], icon=row[7]) for row in cur.fetchall()])
 	return final_build
 
 def roll_summoners():
@@ -100,17 +100,16 @@ def roll_summoners():
 					rando = randint(0,len(summoner_id_array)-1)
 					cur.execute(sql, (summoner_id_array[rando]))
 				else:
-					summoners.append([row[6] for row in cur.fetchall()])
+					summoners.append([dict(name=row[1], icon=row[6]) for row in cur.fetchall()])
 					used_summoners.append(rando)
 					break
-		summoners.append([row[6] for row in cur.fetchall()])
+		summoners.append([dict(name=row[1], icon=row[6]) for row in cur.fetchall()])
 		used_summoners.append(rando)
 	if len(summoners) > 2:
 		summoners.pop()
 	return summoners
 
-@app.route('/')
-def index():
+def roll_champ():
 	### Roll Champion and skill
 	cur = g.db.cursor()
 	cur.execute("SELECT * FROM champions;")
@@ -122,9 +121,15 @@ def index():
 	rando = randint(0,len(champ_id_array)-1)
 	sql = "SELECT * FROM champions WHERE id=%s;"
 	cur.execute(sql, (champ_id_array[rando]))
-
 	rando = randint(3,5)
-	entries = [dict(name=row[1], portrait=row[2], max_skill=row[rando]) for row in cur.fetchall()]
+	skill_button = [i[0] for i in cur.description]
+	champ = [dict(name=row[1], portrait=row[2], skill_icon=row[rando], skill_name=skill_button[rando]) for row in cur.fetchall()]
+	return champ
+
+@app.route('/')
+def index():
+	### Roll champion and ability
+	champ = roll_champ()
 	
 	### Roll summoners
 	summoners = roll_summoners()
@@ -141,7 +146,7 @@ def index():
 	masteries = [dict(offense=of_pts, defense=df_pts, utility=ut_pts)]
 
 
-	return render_template('index.html', entries=entries, summoners=summoners, final_build=final_build, masteries=masteries)
+	return render_template('index.html', champ=champ, summoners=summoners, final_build=final_build, masteries=masteries)
 
 
 @app.route('/images')
