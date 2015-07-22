@@ -14,7 +14,7 @@ app.debug=True
 
 
 def connect_db():
-	return pymysql.connect(host='localhost', user='ec2-user', passwd='m4ris4', db='bravery')
+	return pymysql.connect(host='localhost', user='ec2-user', passwd='pdcd', db='bravery')
 
 @app.before_request
 def before_request():

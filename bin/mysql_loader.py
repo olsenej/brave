@@ -15,7 +15,7 @@ from webscrape import response_summoners
 from webscrape import summoners
 from webscrape import maps
 
-conn=pymysql.connect(host='localhost', user='ec2-user', passwd='m4ris4', db='bravery')
+conn=pymysql.connect(host='localhost', user='ec2-user', passwd='pdcd', db='bravery')
 
 portrait_path = 'images/portraits/'
 skill_path = 'images/skills/'
