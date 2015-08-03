@@ -36,7 +36,6 @@ try:
 			sql = "INSERT IGNORE INTO champions (id, name, portrait, q, w, e, r, passive) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);"
 			cursor.execute(sql, (champ_id,i, portrait, skill_path+q_skill, skill_path+w_skill, skill_path+e_skill, skill_path+r_skill, passive_path+passive_icon))
 			conn.commit()
-			#print('Name: '+i+'|Portrait: '+portrait_path+portrait+'|Q: '+skill_path+q_skill+'|W: '+skill_path+w_skill+'|E: '+skill_path+e_skill+'|R: '+skill_path+r_skill+'|Passive path: '+passive_path+passive_icon)
 		for i in items:
 	# id | name | gold | crystal_scar | twisted_treeline | summoners_rift | howling_abyss | icon 
 			item_id = response_items['data'][i]['id']
@@ -61,7 +60,6 @@ try:
 			sql = "INSERT IGNORE INTO items (id, name , gold, crystal_scar, twisted_treeline, summoners_rift, howling_abyss, icon) VALUES (%r, %s, %r, %r, %r, %r, %r, %s);"
 			cursor.execute(sql, (item_id, item_name, item_gold, item_map_cs, item_map_tt, item_map_sr, item_map_ha, item_path+item_icon))
 			conn.commit()
-			#print(str(item_id) +" "+ item_name+" "+ str(item_gold)+ " "+str(item_map_cs)+" "+ str(item_map_tt)+" "+ str(item_map_sr)+" "+ str(item_map_ha)+" "+ item_path+item_icon)
 
 		for i in summoners:
 			summoner_id = response_summoners['data'][i]['id']

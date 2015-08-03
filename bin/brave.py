@@ -36,18 +36,18 @@ def roll_items(summoners = []):
 	jungle_param = '"Enchantment%"'
 	jungle_item = False
 	jamble = re.compile("^Enchantment.*$")
-	cur.execute("SELECT * FROM items WHERE twisted_treeline=1 AND gold>=2000 AND (id != 3200 AND id != 3198 AND id != 3197 AND id != 3196);")
+	cur.execute("SELECT * FROM items WHERE howling_abyss=1 AND gold>=2000 AND (id != 1001 AND id != 3200 AND id != 3198 AND id != 3197 AND id != 3196);")
 	for i in range(cur.rowcount):
 		row = cur.fetchone()
 		item_id_array.append(row[0])
 	
 	### Add Tier 3 Boots to build first
-	cur.execute("SELECT * FROM items WHERE twisted_treeline=1 AND (name LIKE '%Alacrity%' OR name LIKE '%Captain%' OR name LIKE '%Furor%' OR name LIKE '%Distortion%' OR name LIKE '%Homeguard%');")
+	cur.execute("SELECT * FROM items WHERE howling_abyss=1 AND (name LIKE '%Alacrity%' OR name LIKE '%Captain%' OR name LIKE '%Furor%' OR name LIKE '%Distortion%' OR name LIKE '%Homeguard%');")
 	for i in range(cur.rowcount):
 		row = cur.fetchone()
 		boot_id_array.append(row[0])
 	rando = randint(0,len(boot_id_array)-1)
-	sql = "SELECT * FROM items WHERE twisted_treeline=1 AND id=%s"
+	sql = "SELECT * FROM items WHERE howling_abyss=1 AND id=%s"
 	cur.execute(sql, (boot_id_array[rando]))
 	final_build.append([dict(name=row[1], icon=row[7]) for row in cur.fetchall()])
 	
@@ -84,7 +84,7 @@ def roll_summoners():
 	cur = g.db.cursor()
 	summoners = []
 	used_summoners = []
-	cur.execute("SELECT * FROM summoners WHERE twisted_treeline=1;")
+	cur.execute("SELECT * FROM summoners WHERE howling_abyss=1;")
 	summoner_id_array = []
 	for i in range(cur.rowcount):
 		row = cur.fetchone()
