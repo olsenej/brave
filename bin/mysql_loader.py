@@ -13,7 +13,9 @@ from webscrape import response_items
 from webscrape import items
 from webscrape import response_summoners
 from webscrape import summoners
-from webscrape import maps
+from webscrape import skip_maps
+if skip_maps==False:
+	from webscrape import maps
 
 conn=pymysql.connect(host='localhost', user='ec2-user', passwd='pdcd', db='bravery')
 
@@ -42,24 +44,27 @@ try:
 			item_name = response_items['data'][i]['name']
 			item_gold = response_items['data'][i]['gold']['total']
 			item_icon = response_items['data'][i]['image']['full']
+			if 'tags' in response_items['data'][i]:
+				item_tags = response_items['data'][i]['tags']
 			item_map_cs = False
 			item_map_tt = True
 			item_map_sr = True
 			item_map_ha = True
 			counter = 0
-			for map_number in maps:
-				for counter in range(len(maps[map_number]['unpurchasableItemList'])):
-					if item_id == maps[map_number]['unpurchasableItemList'][counter]:
-						if map_number == '10':
-							item_map_tt = False
-						elif map_number == '11':
-							item_map_sr = False
-						elif map_number == '12':
-							item_map_ha = False
-
-			sql = "INSERT IGNORE INTO items (id, name , gold, crystal_scar, twisted_treeline, summoners_rift, howling_abyss, icon) VALUES (%r, %s, %r, %r, %r, %r, %r, %s);"
-			cursor.execute(sql, (item_id, item_name, item_gold, item_map_cs, item_map_tt, item_map_sr, item_map_ha, item_path+item_icon))
-			conn.commit()
+			if skip_maps==False:
+				for map_number in maps:
+					for counter in range(len(maps[map_number]['unpurchasableItemList'])):
+						if item_id == maps[map_number]['unpurchasableItemList'][counter]:
+							if map_number == '10':
+								item_map_tt = False
+							elif map_number == '11':
+								item_map_sr = False
+							elif map_number == '12':
+								item_map_ha = False
+			if 'Bilgewater' not in item_tags:
+				sql = "INSERT IGNORE INTO items (id, name , gold, crystal_scar, twisted_treeline, summoners_rift, howling_abyss, icon) VALUES (%r, %s, %r, %r, %r, %r, %r, %s);"
+				cursor.execute(sql, (item_id, item_name, item_gold, item_map_cs, item_map_tt, item_map_sr, item_map_ha, item_path+item_icon))
+				conn.commit()
 
 		for i in summoners:
 			summoner_id = response_summoners['data'][i]['id']
@@ -81,7 +86,6 @@ try:
 			sql = "INSERT IGNORE INTO summoners (id, name, crystal_scar, twisted_treeline, summoners_rift, howling_abyss, icon) VALUES (%s, %s, %r, %r, %r, %r, %s);"
 			cursor.execute(sql, (summoner_id, summoner_name, summoner_map_cs, summoner_map_tt, summoner_map_sr, summoner_map_ha, summoner_path+summoner_icon))
 			conn.commit()
-			#print(str(summoner_id) +" "+ summoner_name+" "+str(summoner_map_cs)+" "+ str(summoner_map_tt)+" "+ str(summoner_map_sr)+" "+ str(summoner_map_ha)+" "+ summoner_path+summoner_icon)
 finally:
 	conn.close()
 

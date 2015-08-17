@@ -13,7 +13,7 @@ base_url = 'https://na.api.pvp.net/api/lol/static-data/na/v1.2'
 
 ddrag_realm_url = '{0}/realm?api_key={1}'.format(base_url, apikey)
 champ_list_url = '{0}/champion?champData=passive,spells&api_key={1}'.format(base_url, apikey)
-item_list_url = '{0}/item?itemListData=gold,image&api_key={1}'.format(base_url, apikey)
+item_list_url = '{0}/item?itemListData=gold,image,tags&api_key={1}'.format(base_url, apikey)
 map_data_url = '{0}/map?api_key={1}'.format(base_url, apikey)
 summoner_list_url = '{0}/summoner-spell?spellData=image,modes&api_key={1}'.format(base_url, apikey)
 mastery_list_url = '{0}/mastery?masteryListData=image,ranks&api_key={1}'.format(base_url, apikey)
@@ -39,9 +39,14 @@ rito = urllib.request.urlopen(item_list_url)
 response_items = json.loads(rito.read().decode("utf-8"))
 items = response_items['data']
 
-rito = urllib.request.urlopen(map_data_url)
-response_map = json.loads(rito.read().decode("utf-8"))
-maps = response_map['data']
+try:
+	rito = urllib.request.urlopen(map_data_url)
+	response_map = json.loads(rito.read().decode("utf-8"))
+	maps = response_map['data']
+	skip_maps=False
+except urllib.error.HTTPError:
+	skip_maps=True
+	pass
 
 rito = urllib.request.urlopen(summoner_list_url)
 response_summoners = json.loads(rito.read().decode("utf-8"))

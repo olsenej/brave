@@ -36,13 +36,13 @@ def roll_items(summoners = []):
 	jungle_param = '"Enchantment%"'
 	jungle_item = False
 	jamble = re.compile("^Enchantment.*$")
-	cur.execute("SELECT * FROM items WHERE howling_abyss=1 AND gold>=2000 AND (id != 1001 AND id != 3200 AND id != 3198 AND id != 3197 AND id != 3196);")
+	cur.execute("SELECT * FROM items WHERE twisted_treeline=1 AND gold>=2000 AND (id != 3200 AND id != 3198 AND id != 3197 AND id != 3196);")
 	for i in range(cur.rowcount):
 		row = cur.fetchone()
 		item_id_array.append(row[0])
 	
 	### Add Tier 3 Boots to build first
-	cur.execute("SELECT * FROM items WHERE howling_abyss=1 AND (name LIKE '%Alacrity%' OR name LIKE '%Captain%' OR name LIKE '%Furor%' OR name LIKE '%Distortion%' OR name LIKE '%Homeguard%');")
+	cur.execute("SELECT * FROM items WHERE twisted_treeline=1 AND (name LIKE '%Alacrity%' OR name LIKE '%Captain%' OR name LIKE '%Furor%' OR name LIKE '%Distortion%' OR name LIKE '%Homeguard%') AND (id !=3240 AND id != 3241 AND id !=3242 AND id !=3243 AND id !=3244 AND id !=3245);")
 	for i in range(cur.rowcount):
 		row = cur.fetchone()
 		boot_id_array.append(row[0])
