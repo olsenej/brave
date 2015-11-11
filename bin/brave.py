@@ -36,7 +36,8 @@ def roll_items(summoners = []):
 	jungle_param = '"Enchantment%"'
 	jungle_item = False
 	jamble = re.compile("^Enchantment.*$")
-	cur.execute("SELECT * FROM items WHERE twisted_treeline=1 AND gold>=2000 AND (id != 3200 AND id != 3198 AND id != 3197 AND id != 3196);")
+	cur.execute("SELECT * FROM items WHERE howling_abyss=1 AND gold>=2000 AND (id != 3200 AND id != 3198 AND id != 3197 AND id != 3196);")
+	#cur.execute("SELECT * FROM items WHERE twisted_treeline=1 AND gold>=2000 AND (id != 3200 AND id != 3198 AND id != 3197 AND id != 3196);")
 	for i in range(cur.rowcount):
 		row = cur.fetchone()
 		item_id_array.append(row[0])
