@@ -139,9 +139,11 @@ def index():
 	final_build = roll_items(summoners)
 
 	### Roll Masteries
-	rando = randint(0,30)
+	rando = randint(0,18)
 	of_pts = rando
 	rando = randint(0,30-of_pts)
+	if rando > 18:
+		rando = 18
 	df_pts=rando
 	ut_pts=30-(of_pts+df_pts)
 	masteries = [dict(offense=of_pts, defense=df_pts, utility=ut_pts)]

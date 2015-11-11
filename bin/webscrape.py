@@ -52,9 +52,14 @@ rito = urllib.request.urlopen(summoner_list_url)
 response_summoners = json.loads(rito.read().decode("utf-8"))
 summoners = response_summoners['data']
 
-rito = urllib.request.urlopen(mastery_list_url)
-response_masteries = json.loads(rito.read().decode("utf-8"))
-masteries = response_masteries['data']
+try: 
+	rito = urllib.request.urlopen(mastery_list_url)
+	response_masteries = json.loads(rito.read().decode("utf-8"))
+	masteries = response_masteries['data']
+except urllib.error.URLError as e:
+	print(e.reason + " on mastery rerieval")
+	masteries = False
+	pass
 
 ### Get champ square (portrait)
 for i in champs:
@@ -93,10 +98,11 @@ for i in summoners:
 		urllib.request.urlretrieve(summoner_icon_url, summoner_path+summoner_icon)
 
 ### Get mastery icons
-for i in masteries:
-	mastery_icon = response_masteries['data'][i]['image']['full']
-	mastery_icon_url = '{0}/{1}/img/mastery/{2}'.format(ddrag_cdn, ddrag_version, mastery_icon)
-	if not os.path.exists(mastery_path+mastery_icon):
-		urllib.request.urlretrieve(mastery_icon_url, mastery_path+mastery_icon)
+if masteries != False:
+	for i in masteries:
+		mastery_icon = response_masteries['data'][i]['image']['full']
+		mastery_icon_url = '{0}/{1}/img/mastery/{2}'.format(ddrag_cdn, ddrag_version, mastery_icon)
+		if not os.path.exists(mastery_path+mastery_icon):
+			urllib.request.urlretrieve(mastery_icon_url, mastery_path+mastery_icon)
 
 import mysql_loader
