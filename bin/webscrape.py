@@ -26,19 +26,38 @@ passive_path = image_base_path+'passives/'
 summoner_path = image_base_path+'summoners/'
 mastery_path = image_base_path+'masteries/'
 
-rito = urllib.request.urlopen(ddrag_realm_url)
-response_ddrag = json.loads(rito.read().decode("utf-8"))
-ddrag_version = response_ddrag['dd']
-ddrag_cdn = response_ddrag['cdn']
+### API call for DDRAG
+try:
+	rito = urllib.request.urlopen(ddrag_realm_url)
+	response_ddrag = json.loads(rito.read().decode("utf-8"))
+	ddrag_version = response_ddrag['dd']
+	ddrag_cdn = response_ddrag['cdn']
+except urllib.error.URLError as e:
+    print(e.reason + " on ddrag rerieval")
+    ddrag = False
+    pass
 
-rito = urllib.request.urlopen(champ_list_url)
-response_champs = json.loads(rito.read().decode("utf-8"))
-champs = response_champs['data']
+### API call for CHAMPS
+try:
+	rito = urllib.request.urlopen(champ_list_url)
+	response_champs = json.loads(rito.read().decode("utf-8"))
+	champs = response_champs['data']
+except urllib.error.URLError as e:
+    print(e.reason + " on champ rerieval")
+    champs = False
+    pass
 
-rito = urllib.request.urlopen(item_list_url)
-response_items = json.loads(rito.read().decode("utf-8"))
-items = response_items['data']
+### API call for ITEMS
+try:
+	rito = urllib.request.urlopen(item_list_url)
+	response_items = json.loads(rito.read().decode("utf-8"))
+	items = response_items['data']
+except urllib.error.URLError as e:
+    print(e.reason + " on item rerieval")
+    items = False
+    pass
 
+### API call for MAPS
 try:
 	rito = urllib.request.urlopen(map_data_url)
 	response_map = json.loads(rito.read().decode("utf-8"))
@@ -48,10 +67,17 @@ except urllib.error.HTTPError:
 	skip_maps=True
 	pass
 
-rito = urllib.request.urlopen(summoner_list_url)
-response_summoners = json.loads(rito.read().decode("utf-8"))
-summoners = response_summoners['data']
+### API call for SUMMONERS
+try:
+	rito = urllib.request.urlopen(summoner_list_url)
+	response_summoners = json.loads(rito.read().decode("utf-8"))
+	summoners = response_summoners['data']
+except urllib.error.URLError as e:
+    print(e.reason + " on summoner rerieval")
+    summoners = False
+    pass
 
+### API call for MASTERIES
 try: 
 	rito = urllib.request.urlopen(mastery_list_url)
 	response_masteries = json.loads(rito.read().decode("utf-8"))
@@ -61,6 +87,9 @@ except urllib.error.URLError as e:
 	masteries = False
 	pass
 
+########################################################################
+##### This section saves images locally for serving on the webpage #####
+########################################################################
 ### Get champ square (portrait)
 for i in champs:
 	champ_square = i+'.png' ### Could also be response_champs['data'][i]

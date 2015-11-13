@@ -36,14 +36,13 @@ def roll_items(summoners = []):
 	jungle_param = '"Enchantment%"'
 	jungle_item = False
 	jamble = re.compile("^Enchantment.*$")
-	cur.execute("SELECT * FROM items WHERE howling_abyss=1 AND gold>=2000 AND (id != 3200 AND id != 3198 AND id != 3197 AND id != 3196);")
-	#cur.execute("SELECT * FROM items WHERE twisted_treeline=1 AND gold>=2000 AND (id != 3200 AND id != 3198 AND id != 3197 AND id != 3196);")
+	cur.execute("SELECT * FROM items WHERE howling_abyss=1 AND gold>=2000 AND (id != 3200 AND id != 3198 AND id != 3197 AND id != 3196) AND name not like 'Eye of the%';")
 	for i in range(cur.rowcount):
 		row = cur.fetchone()
 		item_id_array.append(row[0])
 	
 	### Add Tier 3 Boots to build first
-	cur.execute("SELECT * FROM items WHERE twisted_treeline=1 AND (name LIKE '%Alacrity%' OR name LIKE '%Captain%' OR name LIKE '%Furor%' OR name LIKE '%Distortion%' OR name LIKE '%Homeguard%') AND (id !=3240 AND id != 3241 AND id !=3242 AND id !=3243 AND id !=3244 AND id !=3245);")
+	cur.execute("SELECT * FROM items WHERE howling_abyss=1 AND (name LIKE '%Alacrity%' OR name LIKE '%Captain%' OR name LIKE '%Furor%' OR name LIKE '%Distortion%' OR name LIKE '%Homeguard%') AND (id !=3240 AND id != 3241 AND id !=3242 AND id !=3243 AND id !=3244 AND id !=3245);")
 	for i in range(cur.rowcount):
 		row = cur.fetchone()
 		boot_id_array.append(row[0])
@@ -60,7 +59,6 @@ def roll_items(summoners = []):
 		check = cur.fetchone()
 		### Check if rolled a jungle item
 		if jamble.match(check[1]): ### Aparently too stupid to use any() but regex is ok
-			#print(str(summoners[0][0])+str(summoners[1])+smite)
 			### Found a jungle item
 			if smite in summoners[0][0] or smite in summoners[1][0]:
 				if jungle_item == True:

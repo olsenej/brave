@@ -50,7 +50,7 @@ try:
 			item_map_tt = True
 			item_map_sr = True
 			item_map_ha = True
-#			counter = 0
+			counter = 0
 #			if skip_maps==False:
 #				for map_number in maps:
 #					for counter in range(len(maps[map_number]['unpurchasableItemList'])):
@@ -61,10 +61,10 @@ try:
 #								item_map_sr = False
 #							elif map_number == '12':
 #								item_map_ha = False
-#			if 'Bilgewater' not in item_tags:
-#				sql = "INSERT IGNORE INTO items (id, name , gold, crystal_scar, twisted_treeline, summoners_rift, howling_abyss, icon) VALUES (%r, %s, %r, %r, %r, %r, %r, %s);"
-#				cursor.execute(sql, (item_id, item_name, item_gold, item_map_cs, item_map_tt, item_map_sr, item_map_ha, item_path+item_icon))
-#				conn.commit()
+			if 'Bilgewater' not in item_tags:
+				sql = "INSERT IGNORE INTO items (id, name , gold, crystal_scar, twisted_treeline, summoners_rift, howling_abyss, icon) VALUES (%r, %s, %r, %r, %r, %r, %r, %s);"
+				cursor.execute(sql, (item_id, item_name, item_gold, item_map_cs, item_map_tt, item_map_sr, item_map_ha, item_path+item_icon))
+				conn.commit()
 
 		for i in summoners:
 			summoner_id = response_summoners['data'][i]['id']
