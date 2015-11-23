@@ -9,7 +9,7 @@
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='bravery.css') }}">
 	<style>
 		{% for entry in champ %}
-		.wallpaper { background: url(http://brave.olsenej.com/images/splash/{{ entry.name }}_0.jpg) center no-repeat; opacity:1.5; background-size:cover; z-index:-1; }
+		.wallpaper { background: url(http://brave.olsenej.com/images/splash/{{ entry.name }}_{{ entry.skin_number }}.jpg) center no-repeat; opacity:1.5; background-size:cover; z-index:-1; }
 		{% endfor %}
 	</style>
   {% endblock %}

@@ -122,7 +122,7 @@ def roll_champ():
 	cur.execute(sql, (champ_id_array[rando]))
 	rando = randint(3,5)
 	skill_button = [i[0] for i in cur.description]
-	champ = [dict(name=row[1], portrait=row[2], skill_icon=row[rando], skill_name=skill_button[rando]) for row in cur.fetchall()]
+	champ = [dict(name=row[1], portrait=row[2], skill_icon=row[rando], skill_name=skill_button[rando], skin_number=randint(0,int(row[8]))) for row in cur.fetchall()]
 	return champ
 
 @app.route('/')

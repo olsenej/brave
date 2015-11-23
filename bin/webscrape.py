@@ -91,13 +91,14 @@ except urllib.error.URLError as e:
 ########################################################################
 ##### This section saves images locally for serving on the webpage #####
 ########################################################################
-### Get champ square and splash
+### Get champ square and splashes
 for i in champs:
 	champ_square = i+'.png' ### Could also be response_champs['data'][i]
 	champ_square_url = '{0}/{1}/img/champion/{2}'.format(ddrag_cdn, ddrag_version, champ_square)
 	if not os.path.exists(champ_square_path+champ_square):
 		urllib.request.urlretrieve(champ_square_url, champ_square_path+champ_square)
-	for skin_number in range(len(response_champs['data'][i]['skins'])-1):
+	for x in range(len(response_champs['data'][i]['skins'])):
+		skin_number = response_champs['data'][i]['skins'][x]['num']
 		champ_splash_name = '{0}_{1}.jpg'.format(i, skin_number)
 		champ_splash_url = '{0}/img/champion/splash/{1}_{2}.jpg'.format(ddrag_cdn, i, skin_number)
 		if not os.path.exists(champ_splash_path+champ_splash_name):

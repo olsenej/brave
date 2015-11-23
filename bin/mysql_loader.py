@@ -35,8 +35,11 @@ try:
 			e_skill = response_champs['data'][i]['spells'][2]['image']['full']
 			r_skill = response_champs['data'][i]['spells'][3]['image']['full']
 			passive_icon = response_champs['data'][i]['passive']['image']['full']
-			sql = "INSERT IGNORE INTO champions (id, name, portrait, q, w, e, r, passive) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);"
-			cursor.execute(sql, (champ_id,i, portrait, skill_path+q_skill, skill_path+w_skill, skill_path+e_skill, skill_path+r_skill, passive_path+passive_icon))
+			skins = str(len(response_champs['data'][i]['skins'])-1)
+			sql = "INSERT IGNORE INTO champions (id, name, portrait, q, w, e, r, passive, skins) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
+			#sql = "update champions set skins=%s where id=%s;"
+			cursor.execute(sql, (champ_id,i, portrait, skill_path+q_skill, skill_path+w_skill, skill_path+e_skill, skill_path+r_skill, passive_path+passive_icon, skins))
+			#cursor.execute(sql, (skins, champ_id))		This line and the one above it are used to update how many skins a champ has
 			conn.commit()
 		for i in items:
 	# id | name | gold | crystal_scar | twisted_treeline | summoners_rift | howling_abyss | icon 

@@ -1,12 +1,13 @@
-html		{ background: #00242b; }
-body            { background: #00242b; }
-/*h1, h2          { font-family: 'Georgia', serif; } */
-h2              { color: #9eb0bd; }
+html        { background: #00242b; }
+body        { background: #00242b; }
+h2          { color: #9eb0bd; }
 
 
 h1.salt		{ font-family: 'Georgia', serif; color: #b89055; }
+
+.container  { position: relative; }
  
-.entries        { list-style: none; margin: 0; padding: 0; }
+.entries    { list-style: none; margin: 0; padding: 0; }
 
 .label		{ padding: 20px; }
 
@@ -29,3 +30,6 @@ input[name="map_ha"] { background-image:url("http://brave.olsenej.com/images/map
 .col-md-1.offense { }
 .col-md-1.defense{ }
 .col-md-1.utility { }
+
+/* Fixes margin inherited from bootstrap.min.css */
+.jumbotron {margin-bottom: 0px; }
