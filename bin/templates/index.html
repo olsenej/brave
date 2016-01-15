@@ -1,25 +1,24 @@
 {% extends "layout.html" %}
-{% block content %}
-<div class="jumbotron">
-  <h1 class=salt>Welcome to the Salt Mines how Brave are you?</h1>
-   <div class="btn-group btn-group-lg" role="group">
-    <a href="{{ url_for('index') }}"><button type="button" class="btn-lg btn-warning">Do the thing</button></a>
+ {% block content %}
+  <div class="jumbotron">
+    <h1 class=salt>Welcome to the Salt Mines.<br/> How Brave are you?</h1>
+     <div class="btn-group btn-group-lg" role="group">
+      <a href="{{ url_for('index') }}"><button type="button" class="btn-lg btn-warning">Do the thing</button></a>
+    </div>
   </div>
-</div>
-<div class="wallpaper">
-</div>
-  <div class="container">
+ <div class="wallpaper">
+ </div>
+ <div class="container">
 <!--	
 	<div class="anchor bilgewater">
       <div class="col-md-8"><h1>Built for Bilgewater!</h1></div>
       <div class="col-md-6">yarrr</div>
 	</div>
--->
-<!--
+--><!--
     <div class="maps">
-	<p class="btn-lg label-warning">Who needs a Map:</p>
-	<input class="btn-warning" type="submit" name="map_tt" value="T T">
-	<input class="btn-warning" type="submit" name="map_ha" value="H A">
+	<input class="btn-warning" type="submit" name="tree" value="T T">
+	<input class="btn-warning" type="submit" name="aram" value="H A">
+</div>
 	<input class="btn-warning" type="submit" name="map_sr" value="S R">
     </div>    
 -->
@@ -85,7 +84,7 @@
        {{ spell[0].name }} and
       {% endfor -%} specing
       {% for spec in masteries -%}
-       {{ spec.offense }} offense, {{ spec.defense }} defense, {{ spec.utility }} utility
+       {{ spec.offense }} offense, {{ spec.utility }} utility, {{ spec.defense }} defense
       {% endfor %}
     </h4>
   </div>

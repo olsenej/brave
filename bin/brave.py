@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from random import randint
 from contextlib import closing
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, make_response
 from flask_bootstrap import Bootstrap
 import pymysql
 import re
@@ -36,7 +36,7 @@ def roll_items(summoners = []):
 	jungle_param = '"Enchantment%"'
 	jungle_item = False
 	jamble = re.compile("^Enchantment.*$")
-	cur.execute("SELECT * FROM items WHERE howling_abyss=1 AND gold>=2000 AND (id != 3200 AND id != 3198 AND id != 3197 AND id != 3196) AND name not like 'Eye of the%' AND name != 'Zephyr';")
+	cur.execute("SELECT * FROM items WHERE howling_abyss=1 AND gold>=2000 AND (id != 3200 AND id != 3198 AND id != 3197 AND id != 3196) AND name not like 'Eye of the%';")
 	for i in range(cur.rowcount):
 		row = cur.fetchone()
 		item_id_array.append(row[0])
@@ -125,6 +125,26 @@ def roll_champ():
 	champ = [dict(name=row[1], portrait=row[2], skill_icon=row[rando], skill_name=skill_button[rando], skin_number=randint(0,int(row[8]))) for row in cur.fetchall()]
 	return champ
 
+def roll_masteries():
+		of_pts = randint(0,18)
+
+		temp = 30-of_pts
+		if temp > 18:
+			temp = 18
+		ut_pts=randint(0,temp)
+
+		df_pts=30-(of_pts+ut_pts)
+		if df_pts > 18:
+			df_pts = 18
+		if of_pts+df_pts+ut_pts < 30:
+			while (of_pts+df_pts+ut_pts) < 30:
+				if (randint(1,2)%2) == 0 and of_pts <18:
+					of_pts+=1
+				elif (randint(1,2)%2) == 1 and df_pts<18:
+					df_pts+=1
+		masteries = [dict(offense=of_pts, defense=df_pts, utility=ut_pts)]
+		return masteries
+
 @app.route('/')
 def index():
 	### Roll champion and ability
@@ -137,17 +157,19 @@ def index():
 	final_build = roll_items(summoners)
 
 	### Roll Masteries
-	rando = randint(0,18)
-	of_pts = rando
-	rando = randint(0,30-of_pts)
-	if rando > 18:
-		rando = 18
-	df_pts=rando
-	ut_pts=30-(of_pts+df_pts)
-	masteries = [dict(offense=of_pts, defense=df_pts, utility=ut_pts)]
+	masteries = roll_masteries()
+
+#	if .validate_on_submit():
+#		if 'aram' in request.form:
+#			pass  
+#		elif 'tree' in request.form:
+#			pass
 
 
-	return render_template('index.html', champ=champ, summoners=summoners, final_build=final_build, masteries=masteries)
+	response = make_response(render_template('index.html', champ=champ, summoners=summoners, final_build=final_build, masteries=masteries))
+	response.set_cookie('map','aram')
+	return response
+	#return render_template('index.html', champ=champ, summoners=summoners, final_build=final_build, masteries=masteries)
 
 
 @app.route('/images')

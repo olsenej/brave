@@ -16,13 +16,19 @@ h1.salt		{ font-family: 'Georgia', serif; color: #b89055; }
 .anchor		{ background-image:url("http://brave.olsenej.com/images/anchor.png"); width:245px; height:274px; margin:10px 0 0 10px; position:relative; float:right;}
 .bilgewater	{ -webkit-text-fill-color: white; -webkit-text-stroke:1px black; -webkit-font-smoothing: antialiased; margin:0; position:absolute; left:68%; bottom:20%;}
 
-.maps		{ -webkit-text-fill-color: white; -webkit-text-stroke:1px black; -webkit-font-smoothing: antialiased; left:200px; position:relative;}
+.maps		{ -webkit-text-fill-color: white; -webkit-text-stroke:1px black; -webkit-font-smoothing: antialiased; position:absolute; left:80%; margin:20px; height:50px;}
+
 input[type="submit"] { width: 100px; height: 100px; font-size: 3em; margin-left:15px; left:218%; bottom:100%; position:static;}
 input[name="map_tt"] { background-image:url("http://brave.olsenej.com/images/maps/map10.png"); background-size: 100px 100px; background-repeat: no-repeat; }
 input[name="map_sr"] { background-image:url("http://brave.olsenej.com/images/maps/map11.png"); background-size: 100px 100px; background-repeat: no-repeat; }
 input[name="map_ha"] { background-image:url("http://brave.olsenej.com/images/maps/map12.png"); background-size: 100px 100px; background-repeat: no-repeat; }
 
-
+/*
+button[type="submit"] { width: 100px; height: 100px; font-size: 3em; margin-left:15px; left:218%; bottom:100%; position:static;}
+button[name="map_tt"] { background:url("http://brave.olsenej.com/images/maps/map10.png"); background-size: 100px 100px; background-repeat: no-repeat; }
+button[name="map_sr"] { background:url("http://brave.olsenej.com/images/maps/map11.png"); background-size: 100px 100px; background-repeat: no-repeat; }
+button[name="map_ha"] { background:url("http://brave.olsenej.com/images/maps/map12.png"); background-size: 100px 100px; background-repeat: no-repeat; }
+*/
 #items		{ padding-top: 30px; }
 #skill		{ padding-top: 60px; }
 
