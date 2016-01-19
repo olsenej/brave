@@ -72,7 +72,10 @@
 {# COPY PASTE BLOCK #}
   <div class="row">
   <div id="copyblock">
-    <h2><span class="label label-default col-md-2">Copy this:</span></h2>
+    <h2><span id="copy_button" class="label label-default col-md-2" data-clipboard-text="{% for entry in champ -%} {{ entry.name }} maxing {{ entry.skill_name }} building {% endfor -%} {% for item in final_build -%} {{ item[0].name }}, {% endfor -%} taking {% for spell in summoners -%} {{ spell[0].name }} and {% endfor -%} specing {% for spec in masteries -%} {{ spec.offense }} ferocity, {{ spec.utility }} cunning, {{ spec.defense }} resolve {% endfor %}" title="Click to copy.">Click this:</span></h2>
+	 <script type="text/javascript" src={{ url_for('static', filename='ZeroClipboard.js') }}></script>
+	 <script type="text/javascript" src={{ url_for('static', filename='main.js') }}></script>
+
     <h4 class="col-md-8">
       {% for entry in champ -%}
        {{ entry.name }} maxing {{ entry.skill_name }} building
@@ -84,7 +87,7 @@
        {{ spell[0].name }} and
       {% endfor -%} specing
       {% for spec in masteries -%}
-       {{ spec.offense }} offense, {{ spec.utility }} utility, {{ spec.defense }} defense
+       {{ spec.offense }} ferocity, {{ spec.utility }} cunning, {{ spec.defense }} resolve
       {% endfor %}
     </h4>
   </div>

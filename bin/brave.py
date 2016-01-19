@@ -177,7 +177,10 @@ def render_image(image_path):
 	image_path='/images/'
 	return send_from_directory('',image_path)  
 
-
+@app.route('/js')
+def render_node(node_path):
+	node_path='/node_modules/zeroclipboard/dist/'
+	return send_from_directory('',node_path)
 
 if __name__ == '__main__':
     app.run()
