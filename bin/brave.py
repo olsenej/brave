@@ -169,7 +169,6 @@ def index():
 	response = make_response(render_template('index.html', champ=champ, summoners=summoners, final_build=final_build, masteries=masteries))
 	response.set_cookie('map','aram')
 	return response
-	#return render_template('index.html', champ=champ, summoners=summoners, final_build=final_build, masteries=masteries)
 
 
 @app.route('/images')

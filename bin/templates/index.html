@@ -76,6 +76,7 @@
 	 <script type="text/javascript" src={{ url_for('static', filename='ZeroClipboard.js') }}></script>
 	 <script type="text/javascript" src={{ url_for('static', filename='main.js') }}></script>
 
+ {# Visual text #}
     <h4 class="col-md-8">
       {% for entry in champ -%}
        {{ entry.name }} maxing {{ entry.skill_name }} building
